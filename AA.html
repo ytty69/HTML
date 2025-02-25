@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预填充记录信息的表单</title>
+</head>
+<body>
+
+  <h1>记录信息表单</h1>
+
+  <form action="/submit" method="POST">
+    <label for="請求先">請求先:</label>
+    <input type="text" id="請求先" name="請求先"><br><br>
+
+    <label for="請求書No">請求書No:</label>
+    <input type="text" id="請求書No" name="請求書No"><br><br>
+
+    <label for="ご請求金額">ご請求金額:</label>
+    <input type="text" id="ご請求金額" name="ご請求金額"><br><br>
+
+    <label for="支払期日">支払期日:</label>
+    <input type="date" id="支払期日" name="支払期日"><br><br>
+
+    <label for="請求通貨">請求通貨:</label>
+    <input type="text" id="請求通貨" name="請求通貨"><br><br>
+
+    <label for="APP">APP:</label>
+    <input type="text" id="APP" name="APP"><br><br>
+
+    <label for="バージョン">バージョン:</label>
+    <input type="text" id="バージョン" name="バージョン"><br><br>
+
+    <button type="submit">提交</button>
+  </form>
+
+  <!-- 解析 URL 参数并预填充表单 -->
+  <script>
+    // 定义函数来解析 URL 查询参数，返回一个对象
+    function getQueryParams() {
+      const params = {};
+      const queryString = window.location.search.substring(1);
+      const queries = queryString.split('&');
+      queries.forEach(function(query) {
+        const [key, value] = query.split('=');
+        if (key) {
+          params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+        }
+      });
+      return params;
+    }
+    
+    // 页面加载完成后执行
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = getQueryParams();
+      // 对于每个查询参数，查找对应 id 的输入框，然后设置其值
+      for (const key in params) {
+        const input = document.getElementById(key);
+        if (input) {
+          input.value = params[key];
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
